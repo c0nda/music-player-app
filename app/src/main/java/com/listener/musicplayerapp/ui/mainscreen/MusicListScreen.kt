@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 private fun songs(): List<String> {
-    return List(1000) { "Song $it" }
+    return List(100) { "Song $it" }
 }
 
 @Composable
