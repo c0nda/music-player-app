@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,111 +40,115 @@ fun PlayerScreen(
     modifier: Modifier = Modifier
 ) {
     var progress by rememberSaveable { mutableStateOf(0f) }
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
+    Surface(
+        color = MaterialTheme.colorScheme.background
     ) {
-        TopBar()
-        ConstraintLayout(
-            modifier = Modifier
+        Column(
+            modifier = modifier
                 .fillMaxWidth()
         ) {
-            val (image, textTitle, textAuthor, slider, timeRow) = createRefs()
-            Image(
+            TopBar()
+            ConstraintLayout(
                 modifier = Modifier
-                    .constrainAs(image) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-                    .size(280.dp)
-                    .clip(shape = RoundedCornerShape(15.dp))
-                    .background(color = MaterialTheme.colorScheme.primary),
-                imageVector = Icons.Default.Warning,
-                contentDescription = null
-            )
-            Text(
-                modifier = Modifier
-                    .constrainAs(textTitle) {
-                        top.linkTo(image.bottom)
-                        start.linkTo(image.start)
-                    }
-                    .padding(top = 10.dp),
-                text = "Song Name",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                modifier = Modifier
-                    .constrainAs(textAuthor) {
-                        start.linkTo(image.start)
-                        top.linkTo(textTitle.bottom)
-                    },
-                text = "Author",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Slider(
-                value = progress,
-                modifier = Modifier
-                    .constrainAs(slider) {
-                        top.linkTo(textAuthor.bottom)
-                        start.linkTo(image.start)
-                    }
-                    .width(280.dp),
-                onValueChange = { progress = it }
-            )
-            Row(
-                modifier = Modifier
-                    .constrainAs(timeRow) {
-                        start.linkTo(image.start)
-                        top.linkTo(slider.bottom)
-                    }
-                    .width(280.dp)
-            ){
-                Text(text = "0.00")
-                Spacer(modifier = Modifier.weight(1f))
-                Text(text = "3.00")
-            }
-        }
-        Row(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(20.dp)
-        ) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    modifier = Modifier.size(100.dp),
-                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    .fillMaxWidth()
+            ) {
+                val (image, textTitle, textAuthor, slider, timeRow) = createRefs()
+                Image(
+                    modifier = Modifier
+                        .constrainAs(image) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+                        .size(280.dp)
+                        .clip(shape = RoundedCornerShape(15.dp))
+                        .background(color = MaterialTheme.colorScheme.primary),
+                    imageVector = Icons.Default.Warning,
                     contentDescription = null
                 )
+                Text(
+                    modifier = Modifier
+                        .constrainAs(textTitle) {
+                            top.linkTo(image.bottom)
+                            start.linkTo(image.start)
+                        }
+                        .padding(top = 10.dp),
+                    text = "Song Name",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    modifier = Modifier
+                        .constrainAs(textAuthor) {
+                            start.linkTo(image.start)
+                            top.linkTo(textTitle.bottom)
+                        },
+                    text = "Author",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Slider(
+                    value = progress,
+                    modifier = Modifier
+                        .constrainAs(slider) {
+                            top.linkTo(textAuthor.bottom)
+                            start.linkTo(image.start)
+                        }
+                        .width(280.dp),
+                    onValueChange = { progress = it }
+                )
+                Row(
+                    modifier = Modifier
+                        .constrainAs(timeRow) {
+                            start.linkTo(image.start)
+                            top.linkTo(slider.bottom)
+                        }
+                        .width(280.dp)
+                ){
+                    Text(text = "0.00")
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(text = "3.00")
+                }
             }
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(20.dp)
+            ) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        modifier = Modifier.size(100.dp),
+                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        contentDescription = null
+                    )
+                }
+                IconButton(
+                    modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                    onClick = { /*TODO*/ }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(100.dp),
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = null
+                    )
+                }
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        modifier = Modifier.size(100.dp),
+                        imageVector = Icons.Default.KeyboardArrowRight,
+                        contentDescription = null
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.weight(1f))
             IconButton(
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
                 onClick = { /*TODO*/ }
             ) {
                 Icon(
-                    modifier = Modifier
-                        .size(100.dp),
-                    imageVector = Icons.Default.PlayArrow,
+                    painter = painterResource(R.drawable.shuffle_music),
                     contentDescription = null
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    modifier = Modifier.size(100.dp),
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null
-                )
-            }
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            onClick = { /*TODO*/ }
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.shuffle_music),
-                contentDescription = null
-            )
         }
     }
 }
