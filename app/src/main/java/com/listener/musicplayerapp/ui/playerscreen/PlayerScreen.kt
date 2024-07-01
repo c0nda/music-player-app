@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.PlayArrow
@@ -30,9 +28,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.listener.musicplayerapp.R
 
 @Composable
 fun PlayerScreen(
@@ -43,12 +43,7 @@ fun PlayerScreen(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = null
-            )
-        }
+        TopBar()
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -146,12 +141,13 @@ fun PlayerScreen(
             onClick = { /*TODO*/ }
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowForward,
+                painter = painterResource(R.drawable.shuffle_music),
                 contentDescription = null
             )
         }
     }
 }
+
 
 @Preview(showBackground = true, heightDp = 640, widthDp = 360)
 @Composable
