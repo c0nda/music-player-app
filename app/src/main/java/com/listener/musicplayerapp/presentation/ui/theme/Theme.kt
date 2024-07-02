@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.ui.theme
+package com.listener.musicplayerapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

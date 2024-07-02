@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.ui.playerscreen
+package com.listener.musicplayerapp.presentation.ui.playerscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
