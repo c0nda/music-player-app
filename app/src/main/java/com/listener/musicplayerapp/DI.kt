@@ -1,6 +1,6 @@
 package com.listener.musicplayerapp
 
-import com.listener.musicplayerapp.di.app.AppComponent
+import com.listener.musicplayerapp.di.AppComponent
 
 object DI {
 
