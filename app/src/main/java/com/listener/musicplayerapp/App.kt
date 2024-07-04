@@ -1,7 +1,7 @@
 package com.listener.musicplayerapp
 
 import android.app.Application
-import com.listener.musicplayerapp.di.app.DaggerAppComponent
+import com.listener.musicplayerapp.di.DaggerAppComponent
 
 class App: Application() {
 
