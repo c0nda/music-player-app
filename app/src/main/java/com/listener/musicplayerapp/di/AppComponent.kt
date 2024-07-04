@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.di.app
+package com.listener.musicplayerapp.di
 
 import android.content.Context
 import dagger.BindsInstance
