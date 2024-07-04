@@ -64,10 +64,17 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.compose.material)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Dagger 2
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    // Media3 and ExoPlayer
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.session)
 }
