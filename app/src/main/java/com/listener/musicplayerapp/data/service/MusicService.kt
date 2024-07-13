@@ -9,7 +9,7 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import javax.inject.Inject
 
-class MusicService: MediaSessionService() {
+class MusicService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
 
@@ -22,7 +22,6 @@ class MusicService: MediaSessionService() {
         mediaSession = MediaSession.Builder(this, exoPlayer)
             .build()
     }
-
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
         return mediaSession
@@ -45,7 +44,7 @@ class MusicService: MediaSessionService() {
         super.onDestroy()
     }
 
-    private inner class MediaSessionCallback: MediaSession.Callback {
+    private inner class MediaSessionCallback : MediaSession.Callback {
 
         override fun onAddMediaItems(
             mediaSession: MediaSession,
