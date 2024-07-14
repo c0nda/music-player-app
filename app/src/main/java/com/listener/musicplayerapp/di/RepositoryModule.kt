@@ -9,6 +9,6 @@ import dagger.Module
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun provideSongRepository(songRepositoryImpl: SongRepositoryImpl): SongRepository
+    abstract fun bindSongRepository(songRepositoryImpl: SongRepositoryImpl): SongRepository
 
 }
