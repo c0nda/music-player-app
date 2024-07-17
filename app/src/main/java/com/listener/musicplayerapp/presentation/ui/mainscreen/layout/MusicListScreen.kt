@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.mainscreen
+package com.listener.musicplayerapp.presentation.ui.mainscreen.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import com.listener.musicplayerapp.R
-import com.listener.musicplayerapp.presentation.ui.playerscreen.PlayerScreen
+import com.listener.musicplayerapp.presentation.ui.playerscreen.layout.PlayerScreen
 
 private fun songs(): List<String> {
     return List(100) { "Song $it" }

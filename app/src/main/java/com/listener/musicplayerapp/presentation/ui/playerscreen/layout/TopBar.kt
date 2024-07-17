@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.playerscreen
+package com.listener.musicplayerapp.presentation.ui.playerscreen.layout
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
