@@ -5,7 +5,13 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [ServiceModule::class, RepositoryModule::class])
+@Component(
+    modules = [
+        ServiceModule::class,
+        RepositoryModule::class,
+        DataModule::class,
+        UseCaseModule::class]
+)
 @Singleton
 interface AppComponent {
 
