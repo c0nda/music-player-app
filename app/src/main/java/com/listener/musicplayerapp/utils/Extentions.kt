@@ -1,7 +1,14 @@
 package com.listener.musicplayerapp.utils
 
-import android.net.Uri
+import androidx.media3.common.MediaItem
+import com.listener.musicplayerapp.domain.model.Song
 
-fun String.toUri(): Uri {
-    return Uri.parse(this)
+
+fun MediaItem.toSong(): Song {
+    return Song(
+        id = mediaId.toInt(),
+        songName = mediaMetadata.title.toString(),
+        author = mediaMetadata.artist.toString(),
+        duration = 0
+    )
 }
