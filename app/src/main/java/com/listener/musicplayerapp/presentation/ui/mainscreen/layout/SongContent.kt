@@ -16,7 +16,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.listener.musicplayerapp.domain.model.Song
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SongContent(
-    songName: String,
-    modifier: Modifier = Modifier
+    song: Song,
+    modifier: Modifier = Modifier,
+    onClickCard: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -40,7 +41,7 @@ fun SongContent(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.background,
             ),
-            onClick = { /*TODO*/ }
+            onClick = onClickCard
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -57,7 +58,7 @@ fun SongContent(
                 )
                 Column {
                     Text(
-                        text = songName,
+                        text = song.songName,
                         modifier = Modifier
                             .width(200.dp),
                         style = MaterialTheme.typography.titleMedium
@@ -67,15 +68,11 @@ fun SongContent(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = { /*TODO*/ }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.MoreVert,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-            )
-        }
+        Icon(
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = null,
+            modifier = Modifier
+                .size(30.dp)
+        )
     }
 }
