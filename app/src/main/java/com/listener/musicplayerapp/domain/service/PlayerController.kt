@@ -1,7 +1,7 @@
 package com.listener.musicplayerapp.domain.service
 
 import com.listener.musicplayerapp.domain.model.Song
-import com.listener.musicplayerapp.utils.PlayerState
+import com.listener.musicplayerapp.presentation.ui.common.PlayerState
 
 interface PlayerController {
 
