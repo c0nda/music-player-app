@@ -47,8 +47,10 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun play() {
         _homeScreenUiState.value.apply {
-            songs.indexOf(currentSong).let { mediaItemId ->
-                playMusicUseCase.execute(mediaItemId)
+            songs?.indexOf(currentSong).let { mediaItemId ->
+                if (mediaItemId != null) {
+                    playMusicUseCase.execute(mediaItemId)
+                }
             }
         }
     }
