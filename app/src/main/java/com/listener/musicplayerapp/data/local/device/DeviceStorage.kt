@@ -60,7 +60,7 @@ class DeviceStorage(private val context: Context) : LocalDataSource {
                         cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
                     val title =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
-                    val duration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+                    val duration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION).toLong()
                     val artist =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
                     songs.add(
