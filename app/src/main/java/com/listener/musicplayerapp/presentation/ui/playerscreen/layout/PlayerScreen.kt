@@ -47,7 +47,6 @@ fun PlayerScreen(
             modifier = modifier
                 .fillMaxWidth()
         ) {
-            TopBar()
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -151,11 +150,4 @@ fun PlayerScreen(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true, heightDp = 640, widthDp = 360)
-@Composable
-private fun PlayerScreenPreview() {
-    PlayerScreen()
 }
