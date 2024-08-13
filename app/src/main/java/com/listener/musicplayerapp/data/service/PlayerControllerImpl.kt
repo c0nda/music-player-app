@@ -12,8 +12,9 @@ import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.domain.service.PlayerController
 import com.listener.musicplayerapp.presentation.ui.common.PlayerState
 import com.listener.musicplayerapp.utils.toSong
+import javax.inject.Inject
 
-class PlayerControllerImpl(context: Context) : PlayerController {
+class PlayerControllerImpl @Inject constructor(context: Context) : PlayerController {
 
     private var factory: ListenableFuture<MediaController>
     private var mediaController: MediaController? = null
