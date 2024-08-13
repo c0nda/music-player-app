@@ -7,6 +7,7 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
+import com.listener.musicplayerapp.DI
 import javax.inject.Inject
 
 class MusicService : MediaSessionService() {
@@ -19,7 +20,10 @@ class MusicService : MediaSessionService() {
     override fun onCreate() {
         super.onCreate()
 
+        DI.appComponent.inject(this)
+
         mediaSession = MediaSession.Builder(this, exoPlayer)
+            .setCallback(MediaSessionCallback())
             .build()
     }
 
