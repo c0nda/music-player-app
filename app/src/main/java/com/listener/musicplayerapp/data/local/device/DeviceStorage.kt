@@ -8,8 +8,9 @@ import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class DeviceStorage(private val context: Context) : LocalDataSource {
+class DeviceStorage @Inject constructor(private val context: Context) : LocalDataSource {
 
     override fun getAllSongs(): Flow<Result<List<Song>>> = flow {
 
