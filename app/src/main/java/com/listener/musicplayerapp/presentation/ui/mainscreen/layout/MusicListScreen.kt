@@ -20,7 +20,7 @@ import com.listener.musicplayerapp.presentation.ui.mainscreen.HomeScreenUIState
 
 
 @Composable
-fun MainListScreen(
+fun MusicListScreen(
     onEvent: (HomeScreenEvent) -> Unit,
     uiState: HomeScreenUIState
 ) {
@@ -61,8 +61,9 @@ fun MainListScreen(
                         }
                     }
                 }
+
+                error != null -> {}
             }
         }
     }
-    CurrentMusicBottomSheet()
 }
