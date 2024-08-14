@@ -10,6 +10,7 @@ import com.listener.musicplayerapp.domain.usecase.PauseMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.PlayMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.ResumeMusicUseCase
 import com.listener.musicplayerapp.utils.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -58,7 +59,7 @@ class HomeScreenViewModel @Inject constructor(
     private fun getCurrentSong() {
         _homeScreenUiState.value = _homeScreenUiState.value.copy(isLoading = true)
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getAllSongsUseCase.execute().catch {
                 _homeScreenUiState.value = _homeScreenUiState.value.copy(
                     isLoading = false,
