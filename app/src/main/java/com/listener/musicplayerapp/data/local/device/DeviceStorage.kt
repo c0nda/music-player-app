@@ -6,28 +6,28 @@ import android.provider.MediaStore
 import com.listener.musicplayerapp.data.local.LocalDataSource
 import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.utils.Result
+import com.listener.musicplayerapp.utils.ResultUtils
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class DeviceStorage @Inject constructor(private val context: Context) : LocalDataSource {
 
-    override fun getAllSongs(): Flow<Result<List<Song>>> = flow {
+    override fun getAllSongs(): Flow<Result<List<Song>>> {
+        return ResultUtils.requestFlow {
 
-        val songs = mutableListOf<Song>()
+            val songs = mutableListOf<Song>()
 
-        val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.DISPLAY_NAME,
-            MediaStore.Audio.Media.AUTHOR,
-            MediaStore.Audio.Media.DURATION
-        )
+            val projection = arrayOf(
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media.AUTHOR,
+                MediaStore.Audio.Media.DURATION
+            )
 
-        getSongsFromExternalStorage(songs, projection)
-        getSongsFromInternalStorage(songs, projection)
+            getSongsFromExternalStorage(songs, projection)
+            getSongsFromInternalStorage(songs, projection)
 
-        if (songs.isNotEmpty()) {
-            emit(Result.Success(songs))
+            songs
         }
     }
 
@@ -61,7 +61,8 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
                         cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
                     val title =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
-                    val duration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION).toLong()
+                    val duration =
+                        cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION).toLong()
                     val artist =
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
                     songs.add(
