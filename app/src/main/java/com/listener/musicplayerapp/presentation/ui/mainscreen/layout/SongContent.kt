@@ -25,7 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.listener.musicplayerapp.domain.model.Song
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SongContent(
     song: Song,
