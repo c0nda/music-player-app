@@ -63,13 +63,13 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
                         cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
                     val duration =
                         cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION).toLong()
-                    val artist =
-                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+                    val author =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.AUTHOR))
                     songs.add(
                         Song(
                             id = id,
                             songName = title,
-                            author = artist,
+                            author = author,
                             duration = duration
                         )
                     )
