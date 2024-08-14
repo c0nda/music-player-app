@@ -44,7 +44,8 @@ fun MusicListScreen(
                 }
 
                 !isLoading && error == null -> {
-                    if (songs != null) {
+                    Log.e("!isLoading & error == null", "ok")
+                    if (!songs.isNullOrEmpty()) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -62,7 +63,7 @@ fun MusicListScreen(
                             }
                         }
                     } else {
-                        Text(text = "Empty list")
+                        Text(text = "No music found")
                     }
                 }
 
