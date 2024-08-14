@@ -21,13 +21,16 @@ import com.listener.musicplayerapp.presentation.ui.mainscreen.HomeScreenEvent
 import com.listener.musicplayerapp.presentation.ui.mainscreen.HomeScreenViewModel
 import com.listener.musicplayerapp.presentation.ui.mainscreen.layout.CurrentMusicBottomSheet
 import com.listener.musicplayerapp.presentation.ui.mainscreen.layout.MusicListScreen
+import com.listener.musicplayerapp.presentation.ui.playerscreen.PlayerScreenViewModel
+import com.listener.musicplayerapp.presentation.ui.playerscreen.layout.PlayerScreen
 
 @Composable
 fun PlayerNavHost(
     navController: NavHostController,
     playerControllerViewModel: PlayerControllerViewModel
 ) {
-    val playerControllerUIState = playerControllerViewModel.playerControllerUIState
+    val playerControllerUIState =
+        playerControllerViewModel.playerControllerUIState.collectAsState().value
 
     NavHost(navController = navController, startDestination = Routes.HomeScreen.route) {
         composable(route = Routes.HomeScreen.route) {
@@ -51,15 +54,21 @@ fun PlayerNavHost(
                 CurrentMusicBottomSheet(
                     modifier = Modifier.align(Alignment.BottomCenter),
                     onEvent = homeScreenViewModel::onEvent,
-                    song = playerControllerUIState.collectAsState().value.currentSong,
-                    playerState = playerControllerUIState.collectAsState().value.playerState,
+                    song = playerControllerUIState.currentSong,
+                    playerState = playerControllerUIState.playerState,
                     onBarClick = { navController.navigate(Routes.SongScreen.route) }
                 )
             }
         }
 
         composable(route = Routes.SongScreen.route) {
-
+            val playerScreenViewModel: PlayerScreenViewModel = daggerViewModel {
+                DI.appComponent.viewModelFactory().create(PlayerScreenViewModel::class.java)
+            }
+            PlayerScreen(
+                playerControllerUIState = playerControllerUIState,
+                onEvent = playerScreenViewModel::onEvent
+            )
         }
     }
 }
