@@ -45,10 +45,11 @@ fun MusicListScreen(
 
                 !isLoading && error == null -> {
                     if (!songs.isNullOrEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
-                            contentAlignment = Alignment.BottomCenter
+                            contentAlignment = Alignment.TopCenter
                         ) {
                             LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
                                 items(items = songs) { song ->
@@ -68,7 +69,12 @@ fun MusicListScreen(
 
                 error != null -> {
                     Log.e("MusicListScreenError", error)
-                    Text(text = "Error. Check logs.")
+                    Text(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.CenterHorizontally),
+                        text = "Error. Check logs."
+                    )
                 }
             }
         }
