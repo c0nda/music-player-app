@@ -3,18 +3,15 @@ package com.listener.musicplayerapp.presentation.ui.mainscreen.layout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -62,16 +59,9 @@ fun SongContent(
                             .width(200.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
-                    Text(text = "Author")
+                    Text(text = song.author)
                 }
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        Icon(
-            imageVector = Icons.Filled.MoreVert,
-            contentDescription = null,
-            modifier = Modifier
-                .size(30.dp)
-        )
     }
 }
