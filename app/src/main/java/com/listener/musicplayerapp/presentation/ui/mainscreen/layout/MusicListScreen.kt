@@ -44,7 +44,6 @@ fun MusicListScreen(
                 }
 
                 !isLoading && error == null -> {
-                    Log.e("!isLoading & error == null", "ok")
                     if (!songs.isNullOrEmpty()) {
                         Box(
                             modifier = Modifier
