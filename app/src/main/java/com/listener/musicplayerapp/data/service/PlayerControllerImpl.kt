@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
@@ -11,13 +12,15 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.domain.service.PlayerController
 import com.listener.musicplayerapp.presentation.ui.common.PlayerState
+import com.listener.musicplayerapp.utils.toPlayerState
 import com.listener.musicplayerapp.utils.toSong
 import javax.inject.Inject
 
 class PlayerControllerImpl @Inject constructor(context: Context) : PlayerController {
 
     private var factory: ListenableFuture<MediaController>
-    private var mediaController: MediaController? = null
+    private val mediaController: MediaController?
+        get() = if (factory.isDone) factory.get() else null
 
     init {
         val sessionToken = SessionToken(context, ComponentName(context, MusicService::class.java))
@@ -25,18 +28,7 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
             context,
             sessionToken
         ).buildAsync()
-        factory.addListener(
-            {
-                mediaController = factory.let {
-                    if (it.isDone) {
-                        it.get()
-                    } else {
-                        null
-                    }
-                }
-            },
-            MoreExecutors.directExecutor()
-        )
+        factory.addListener({ controllerListener() }, MoreExecutors.directExecutor())
     }
 
     override var playerControllerCallback: (
@@ -53,6 +45,7 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
         val mediaItems = songs.map {
             MediaItem.Builder()
                 .setMediaId(it.id.toString())
+                .setUri(it.uri)
                 .setMediaMetadata(
                     MediaMetadata.Builder()
                         .setTitle(it.songName)
@@ -103,5 +96,24 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
     override fun destroy() {
         MediaController.releaseFuture(factory)
         playerControllerCallback = null
+    }
+
+    private fun controllerListener() {
+        mediaController?.addListener(object : Player.Listener {
+            override fun onEvents(player: Player, events: Player.Events) {
+                super.onEvents(player, events)
+
+                with(player) {
+                    playerControllerCallback?.invoke(
+                        playbackState.toPlayerState(isPlaying),
+                        currentMediaItem?.toSong(),
+                        currentPosition.coerceAtLeast(0L),
+                        duration.coerceAtLeast(0L),
+                        repeatMode == Player.REPEAT_MODE_OFF,
+                        shuffleModeEnabled,
+                    )
+                }
+            }
+        })
     }
 }
