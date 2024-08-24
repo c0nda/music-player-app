@@ -1,7 +1,9 @@
 package com.listener.musicplayerapp.data.local.device
 
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.MediaStore
 import com.listener.musicplayerapp.data.local.LocalDataSource
 import com.listener.musicplayerapp.domain.model.Song
@@ -50,7 +52,7 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
             null,
             sortOrder
         )
-        iterateAllSongs(cursor, songs)
+        iterateAllSongs(cursor, songs, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
     }
 
     private suspend fun getSongsFromInternalStorage(
@@ -66,11 +68,15 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
             null,
             sortOrder
         )
-        iterateAllSongs(cursor, songs)
+        iterateAllSongs(cursor, songs, MediaStore.Audio.Media.INTERNAL_CONTENT_URI)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private suspend fun iterateAllSongs(cursor: Cursor?, songs: MutableList<Song>) =
+    private suspend fun iterateAllSongs(
+        cursor: Cursor?,
+        songs: MutableList<Song>,
+        contentType: Uri
+    ) =
         coroutineScope {
             withContext(Dispatchers.IO) {
                 if (cursor != null) {
@@ -89,7 +95,11 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
                             val author = async {
                                 cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.AUTHOR))
                             }
+
                             awaitAll(id, title, duration, author)
+
+                            val uri =
+                                ContentUris.withAppendedId(contentType, id.getCompleted().toLong())
 
                             val completedTitle = title.getCompleted()
                             if (completedTitle.endsWith(".mp3")) {
@@ -98,7 +108,8 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
                                         id = id.getCompleted(),
                                         songName = completedTitle,
                                         author = author.getCompleted() ?: "Unknown author",
-                                        duration = duration.getCompleted()
+                                        duration = duration.getCompleted(),
+                                        uri = uri
                                     )
                                 )
                             }
