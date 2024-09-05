@@ -56,7 +56,7 @@ class MusicService : MediaSessionService() {
             mediaItems: MutableList<MediaItem>
         ): ListenableFuture<MutableList<MediaItem>> {
             val updatedMediaItems = mediaItems.map {
-                it.buildUpon().setTag(it.mediaId).build()
+                it.buildUpon().setUri(it.localConfiguration?.uri).build()
             }.toMutableList()
             return Futures.immediateFuture(updatedMediaItems)
         }
