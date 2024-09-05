@@ -22,8 +22,7 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.DISPLAY_NAME,
-            MediaStore.Audio.Media.AUTHOR,
-            MediaStore.Audio.Media.DURATION
+            MediaStore.Audio.Media.AUTHOR
         )
 
         val selection: String? = null
