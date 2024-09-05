@@ -8,10 +8,9 @@ import com.listener.musicplayerapp.presentation.ui.common.PlayerState
 
 fun MediaItem.toSong(): Song {
     return Song(
-        id = mediaId.toInt(),
+        id = mediaId,
         songName = mediaMetadata.title.toString(),
         author = mediaMetadata.artist.toString(),
-        duration = 0,
         uri = localConfiguration?.uri!!
     )
 }
