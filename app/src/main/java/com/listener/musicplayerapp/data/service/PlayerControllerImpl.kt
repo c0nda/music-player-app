@@ -1,12 +1,10 @@
 package com.listener.musicplayerapp.data.service
 
-import android.content.ComponentName
-import android.content.Context
+import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
-import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.listener.musicplayerapp.domain.model.Song
@@ -16,18 +14,12 @@ import com.listener.musicplayerapp.utils.toPlayerState
 import com.listener.musicplayerapp.utils.toSong
 import javax.inject.Inject
 
-class PlayerControllerImpl @Inject constructor(context: Context) : PlayerController {
+class PlayerControllerImpl @Inject constructor(val factory: ListenableFuture<MediaController>) : PlayerController {
 
-    private var factory: ListenableFuture<MediaController>
     private val mediaController: MediaController?
         get() = if (factory.isDone) factory.get() else null
 
     init {
-        val sessionToken = SessionToken(context, ComponentName(context, MusicService::class.java))
-        factory = MediaController.Builder(
-            context,
-            sessionToken
-        ).buildAsync()
         factory.addListener({ controllerListener() }, MoreExecutors.directExecutor())
     }
 
@@ -44,8 +36,8 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
     override fun addMediaItems(songs: List<Song>) {
         val mediaItems = songs.map {
             MediaItem.Builder()
-                .setMediaId(it.id.toString())
                 .setUri(it.uri)
+                .setMediaId(it.uri.toString())
                 .setMediaMetadata(
                     MediaMetadata.Builder()
                         .setTitle(it.songName)
@@ -57,9 +49,9 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
         mediaController?.setMediaItems(mediaItems)
     }
 
-    override fun play(mediaItemId: Int) {
+    override fun play(mediaItemIndex: Int) {
         mediaController?.apply {
-            seekToDefaultPosition(mediaItemId)
+            seekToDefaultPosition(mediaItemIndex)
             playWhenReady = true
             prepare()
         }
@@ -102,16 +94,17 @@ class PlayerControllerImpl @Inject constructor(context: Context) : PlayerControl
         mediaController?.addListener(object : Player.Listener {
             override fun onEvents(player: Player, events: Player.Events) {
                 super.onEvents(player, events)
-
                 with(player) {
-                    playerControllerCallback?.invoke(
-                        playbackState.toPlayerState(isPlaying),
-                        currentMediaItem?.toSong(),
-                        currentPosition.coerceAtLeast(0L),
-                        duration.coerceAtLeast(0L),
-                        repeatMode == Player.REPEAT_MODE_OFF,
-                        shuffleModeEnabled,
-                    )
+                    if (currentMediaItem != null) {
+                        playerControllerCallback?.invoke(
+                            playbackState.toPlayerState(isPlaying),
+                            currentMediaItem!!.toSong(),
+                            currentPosition.coerceAtLeast(0L),
+                            duration.coerceAtLeast(0L),
+                            repeatMode == Player.REPEAT_MODE_ONE,
+                            shuffleModeEnabled,
+                        )
+                    }
                 }
             }
         })

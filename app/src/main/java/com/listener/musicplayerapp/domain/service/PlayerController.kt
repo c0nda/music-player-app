@@ -17,7 +17,7 @@ interface PlayerController {
 
     fun addMediaItems(songs: List<Song>)
 
-    fun play(mediaItemId: Int)
+    fun play(mediaItemIndex: Int)
 
     fun pause()
 
