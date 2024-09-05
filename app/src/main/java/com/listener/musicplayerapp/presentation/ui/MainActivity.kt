@@ -2,6 +2,7 @@ package com.listener.musicplayerapp.presentation.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -34,9 +35,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         playerControllerViewModel.destroyPlayerController()
+    }
+
+    override fun onDestroy() {
         stopService(Intent(this, MusicService::class.java))
+        super.onDestroy()
     }
 }
