@@ -10,10 +10,6 @@ import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.utils.Result
 import com.listener.musicplayerapp.utils.ResultUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -71,52 +67,38 @@ class DeviceStorage @Inject constructor(private val context: Context) : LocalDat
         iterateAllSongs(cursor, songs, MediaStore.Audio.Media.INTERNAL_CONTENT_URI)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun iterateAllSongs(
         cursor: Cursor?,
         songs: MutableList<Song>,
         contentType: Uri
-    ) =
-        coroutineScope {
-            withContext(Dispatchers.IO) {
-                if (cursor != null) {
-                    if (cursor.moveToFirst()) {
-                        do {
-                            val id = async {
-                                cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-                            }
-                            val title = async {
-                                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
-                            }
-                            val duration = async {
-                                cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-                                    .toLong()
-                            }
-                            val author = async {
-                                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.AUTHOR))
-                            }
+    ) {
+        withContext(Dispatchers.IO) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
 
-                            awaitAll(id, title, duration, author)
+                    val title =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
 
-                            val uri =
-                                ContentUris.withAppendedId(contentType, id.getCompleted().toLong())
+                    val author =
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.AUTHOR))
 
-                            val completedTitle = title.getCompleted()
-                            if (completedTitle.endsWith(".mp3")) {
-                                songs.add(
-                                    Song(
-                                        id = id.getCompleted(),
-                                        songName = completedTitle,
-                                        author = author.getCompleted() ?: "Unknown author",
-                                        duration = duration.getCompleted(),
-                                        uri = uri
-                                    )
-                                )
-                            }
-                        } while (cursor.moveToNext())
+                    val uri =
+                        ContentUris.withAppendedId(contentType, id.toLong())
+
+                    if (title.endsWith(".mp3")) {
+                        songs.add(
+                            Song(
+                                id = id,
+                                songName = title,
+                                author = author ?: "Unknown author",
+                                uri = uri
+                            )
+                        )
                     }
-                }
-                cursor?.close()
+                } while (cursor.moveToNext())
             }
         }
+        cursor?.close()
+    }
 }
