@@ -69,8 +69,8 @@ fun CurrentMusicBottomSheet(
                             contentDescription = null
                         )
                         Column {
-                            Text(text = "Song Name")
-                            Text(text = "Author")
+                            Text(text = song.songName)
+                            Text(text = song.author)
                         }
                         Spacer(modifier = Modifier.weight(1f))
                         IconButton(onClick = { /*TODO*/ }) {
@@ -85,7 +85,7 @@ fun CurrentMusicBottomSheet(
                     modifier = Modifier
                         .layoutId("music_player")
                 ) {
-                    PlayerScreen()
+//                    PlayerScreen()
                 }
             }
         }
