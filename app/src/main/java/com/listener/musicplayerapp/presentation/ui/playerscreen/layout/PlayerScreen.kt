@@ -30,14 +30,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.listener.musicplayerapp.R
+import com.listener.musicplayerapp.presentation.ui.common.PlayerControllerUIState
+import com.listener.musicplayerapp.presentation.ui.playerscreen.PlayerEvent
 
 @Composable
 fun PlayerScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEvent: (PlayerEvent) -> Unit,
+    playerControllerUIState: PlayerControllerUIState
 ) {
     var progress by rememberSaveable { mutableStateOf(0f) }
     Surface(
