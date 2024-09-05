@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.listener.musicplayerapp.domain.usecase.DestroyPlayerControllerUseCase
 import com.listener.musicplayerapp.domain.usecase.GetCurrentPositionUseCase
 import com.listener.musicplayerapp.domain.usecase.SetPlayerControllerCallbackUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class PlayerControllerViewModel @Inject constructor(
             if (playerState == PlayerState.PLAYING) {
                 viewModelScope.launch {
                     while (true) {
+                        delay(3000)
                         _playerControllerUIState.value = _playerControllerUIState.value.copy(
                             currentPosition = getCurrentPositionUseCase.execute()
                         )
