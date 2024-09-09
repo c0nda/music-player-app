@@ -3,7 +3,6 @@ package com.listener.musicplayerapp.di
 import com.listener.musicplayerapp.domain.repository.SongRepository
 import com.listener.musicplayerapp.domain.service.PlayerController
 import com.listener.musicplayerapp.domain.usecase.AddMediaItemsUseCase
-import com.listener.musicplayerapp.domain.usecase.DestroyPlayerControllerUseCase
 import com.listener.musicplayerapp.domain.usecase.GetAllSongsUseCase
 import com.listener.musicplayerapp.domain.usecase.GetCurrentPositionUseCase
 import com.listener.musicplayerapp.domain.usecase.GetCurrentSongUseCase
@@ -23,10 +22,6 @@ class UseCaseModule {
     @Provides
     fun provideAddMediaItemsUseCase(playerController: PlayerController) =
         AddMediaItemsUseCase(playerController)
-
-    @Provides
-    fun provideDestroyPlayerControllerUseCase(playerController: PlayerController) =
-        DestroyPlayerControllerUseCase(playerController)
 
     @Provides
     fun provideGetAllSongsUseCase(songRepository: SongRepository) =
