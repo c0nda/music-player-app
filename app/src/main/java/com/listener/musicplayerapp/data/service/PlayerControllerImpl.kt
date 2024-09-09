@@ -1,6 +1,5 @@
 package com.listener.musicplayerapp.data.service
 
-import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
@@ -14,13 +13,17 @@ import com.listener.musicplayerapp.utils.toPlayerState
 import com.listener.musicplayerapp.utils.toSong
 import javax.inject.Inject
 
-class PlayerControllerImpl @Inject constructor(val factory: ListenableFuture<MediaController>) : PlayerController {
+class PlayerControllerImpl @Inject constructor(
+    private val factory: ListenableFuture<MediaController>
+) : PlayerController {
 
     private val mediaController: MediaController?
         get() = if (factory.isDone) factory.get() else null
 
     init {
-        factory.addListener({ controllerListener() }, MoreExecutors.directExecutor())
+        factory.addListener({
+            controllerListener()
+        }, MoreExecutors.directExecutor())
     }
 
     override var playerControllerCallback: (
@@ -83,11 +86,6 @@ class PlayerControllerImpl @Inject constructor(val factory: ListenableFuture<Med
 
     override fun seekToPos(position: Long) {
         mediaController?.seekTo(position)
-    }
-
-    override fun destroy() {
-        MediaController.releaseFuture(factory)
-        playerControllerCallback = null
     }
 
     private fun controllerListener() {
