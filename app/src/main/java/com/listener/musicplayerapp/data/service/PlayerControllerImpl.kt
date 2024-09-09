@@ -49,7 +49,9 @@ class PlayerControllerImpl @Inject constructor(
                 )
                 .build()
         }
-        mediaController?.setMediaItems(mediaItems)
+        if (mediaController?.mediaItemCount == 0) {
+            mediaController?.setMediaItems(mediaItems)
+        }
     }
 
     override fun play(mediaItemIndex: Int) {
