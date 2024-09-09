@@ -32,6 +32,4 @@ interface PlayerController {
     fun goToPrevSong()
 
     fun seekToPos(position: Long)
-
-    fun destroy()
 }
