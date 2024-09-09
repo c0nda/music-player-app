@@ -2,7 +2,6 @@ package com.listener.musicplayerapp.presentation.ui.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.listener.musicplayerapp.domain.usecase.DestroyPlayerControllerUseCase
 import com.listener.musicplayerapp.domain.usecase.GetCurrentPositionUseCase
 import com.listener.musicplayerapp.domain.usecase.SetPlayerControllerCallbackUseCase
 import kotlinx.coroutines.delay
@@ -13,8 +12,7 @@ import javax.inject.Inject
 
 class PlayerControllerViewModel @Inject constructor(
     private val getCurrentPositionUseCase: GetCurrentPositionUseCase,
-    private val setPlayerControllerCallbackUseCase: SetPlayerControllerCallbackUseCase,
-    private val destroyPlayerControllerUseCase: DestroyPlayerControllerUseCase
+    private val setPlayerControllerCallbackUseCase: SetPlayerControllerCallbackUseCase
 ) : ViewModel() {
 
     private var _playerControllerUIState = MutableStateFlow(PlayerControllerUIState())
@@ -51,9 +49,5 @@ class PlayerControllerViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun destroyPlayerController() {
-        destroyPlayerControllerUseCase.execute()
     }
 }
