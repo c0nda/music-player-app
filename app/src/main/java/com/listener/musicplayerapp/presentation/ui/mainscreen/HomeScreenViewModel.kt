@@ -10,6 +10,7 @@ import com.listener.musicplayerapp.domain.usecase.PauseMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.PlayMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.ResumeMusicUseCase
 import com.listener.musicplayerapp.utils.Result
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -67,7 +68,11 @@ class HomeScreenViewModel @Inject constructor(
             }.collect {
                 _homeScreenUiState.value = when (it) {
                     is Result.Success -> {
-                        it.data.let { songs -> addMediaItemsUseCase.execute(songs) }
+
+                        it.data.let { songs ->
+                            delay(1000)
+                            addMediaItemsUseCase.execute(songs)
+                        }
 
                         _homeScreenUiState.value.copy(
                             isLoading = false,
