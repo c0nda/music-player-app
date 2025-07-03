@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.mainscreen
+package com.listener.musicplayerapp.presentation.playerscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +9,8 @@ import com.listener.musicplayerapp.domain.usecase.GoToPreviousSongUseCase
 import com.listener.musicplayerapp.domain.usecase.PauseMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.PlayMusicUseCase
 import com.listener.musicplayerapp.domain.usecase.ResumeMusicUseCase
+import com.listener.musicplayerapp.presentation.common.PlayerEvent
+import com.listener.musicplayerapp.presentation.mainscreen.MainScreenUIState
 import com.listener.musicplayerapp.utils.Result
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +19,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeScreenViewModel @Inject constructor(
+class PlayerViewModel @Inject constructor(
     private val addMediaItemsUseCase: AddMediaItemsUseCase,
     private val getAllSongsUseCase: GetAllSongsUseCase,
     private val goToNextSongUseCase: GoToNextSongUseCase,
@@ -27,27 +29,29 @@ class HomeScreenViewModel @Inject constructor(
     private val pauseMusicUseCase: PauseMusicUseCase
 ) : ViewModel() {
 
-    private val _homeScreenUiState = MutableStateFlow(HomeScreenUIState())
-    val homeScreenUIState = _homeScreenUiState.asStateFlow()
+    private val _playerScreenUiState = MutableStateFlow(MainScreenUIState())
+    val playerScreenUiState = _playerScreenUiState.asStateFlow()
 
-    fun onEvent(event: HomeScreenEvent) {
+    fun onEvent(event: PlayerEvent) {
         when (event) {
-            HomeScreenEvent.Play -> play()
-            HomeScreenEvent.Resume -> resume()
-            HomeScreenEvent.PauseSong -> pause()
-            HomeScreenEvent.GetSong -> getCurrentSong()
-            HomeScreenEvent.GoToNext -> goToNext()
-            HomeScreenEvent.GoToPrev -> goToPrev()
-            is HomeScreenEvent.OnSongSelected -> _homeScreenUiState.value =
-                _homeScreenUiState.value.copy(
+            PlayerEvent.Play -> play()
+            PlayerEvent.Resume -> resume()
+            PlayerEvent.PauseSong -> pause()
+            PlayerEvent.GetSong -> getCurrentSong()
+            PlayerEvent.GoToNextSong -> goToNext()
+            PlayerEvent.GoToPrevSong -> goToPrev()
+            is PlayerEvent.OnSongSelected -> _playerScreenUiState.value =
+                _playerScreenUiState.value.copy(
                     currentSong = event.song
                 )
+
+            is PlayerEvent.SeekToPosition -> TODO()
         }
     }
 
 
     private fun play() {
-        _homeScreenUiState.value.apply {
+        _playerScreenUiState.value.apply {
             songs?.indexOf(currentSong).let { mediaItemId ->
                 if (mediaItemId != null) {
                     playMusicUseCase.execute(mediaItemId)
@@ -57,16 +61,16 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun getCurrentSong() {
-        _homeScreenUiState.value = _homeScreenUiState.value.copy(isLoading = true)
+        _playerScreenUiState.value = _playerScreenUiState.value.copy(isLoading = true)
 
         viewModelScope.launch {
             getAllSongsUseCase.execute().catch {
-                _homeScreenUiState.value = _homeScreenUiState.value.copy(
+                _playerScreenUiState.value = _playerScreenUiState.value.copy(
                     isLoading = false,
                     error = it.message
                 )
             }.collect {
-                _homeScreenUiState.value = when (it) {
+                _playerScreenUiState.value = when (it) {
                     is Result.Success -> {
 
                         it.data.let { songs ->
@@ -74,21 +78,21 @@ class HomeScreenViewModel @Inject constructor(
                             addMediaItemsUseCase.execute(songs)
                         }
 
-                        _homeScreenUiState.value.copy(
+                        _playerScreenUiState.value.copy(
                             isLoading = false,
                             songs = it.data
                         )
                     }
 
                     is Result.Loading -> {
-                        _homeScreenUiState.value.copy(
+                        _playerScreenUiState.value.copy(
                             isLoading = true,
                             error = null
                         )
                     }
 
                     is Result.Error -> {
-                        _homeScreenUiState.value.copy(
+                        _playerScreenUiState.value.copy(
                             isLoading = false,
                             error = it.error?.message
                         )

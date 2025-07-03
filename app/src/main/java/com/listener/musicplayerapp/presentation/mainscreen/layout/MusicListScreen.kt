@@ -1,6 +1,5 @@
-package com.listener.musicplayerapp.presentation.ui.mainscreen.layout
+package com.listener.musicplayerapp.presentation.mainscreen.layout
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,14 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.listener.musicplayerapp.presentation.ui.mainscreen.HomeScreenEvent
-import com.listener.musicplayerapp.presentation.ui.mainscreen.HomeScreenUIState
+import com.listener.musicplayerapp.presentation.mainscreen.MainScreenUIState
+import com.listener.musicplayerapp.presentation.common.PlayerEvent
 
 
 @Composable
 fun MusicListScreen(
-    onEvent: (HomeScreenEvent) -> Unit,
-    uiState: HomeScreenUIState
+    onEvent: (PlayerEvent) -> Unit,
+    uiState: MainScreenUIState
 ) {
     Column {
         Spacer(modifier = Modifier.height(24.dp))
@@ -56,8 +55,8 @@ fun MusicListScreen(
                                     SongContent(
                                         song = song,
                                         onClickCard = {
-                                            onEvent(HomeScreenEvent.OnSongSelected(song))
-                                            onEvent(HomeScreenEvent.Play)
+                                            onEvent(PlayerEvent.OnSongSelected(song))
+                                            onEvent(PlayerEvent.Play)
                                         })
                                 }
                             }
@@ -68,12 +67,11 @@ fun MusicListScreen(
                 }
 
                 error != null -> {
-                    Log.e("MusicListScreenError", error)
                     Text(
                         modifier = Modifier
                             .fillMaxSize()
                             .align(Alignment.CenterHorizontally),
-                        text = "Error. Check logs."
+                        text = "Error"
                     )
                 }
             }

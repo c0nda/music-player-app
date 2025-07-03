@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.mainscreen.layout
+package com.listener.musicplayerapp.presentation.mainscreen.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

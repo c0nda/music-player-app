@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.common
+package com.listener.musicplayerapp.presentation.common
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel

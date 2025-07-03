@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.playerscreen.layout
+package com.listener.musicplayerapp.presentation.playerscreen.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,18 +23,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.listener.musicplayerapp.R
-import com.listener.musicplayerapp.presentation.ui.common.PlayerControllerUIState
-import com.listener.musicplayerapp.presentation.ui.playerscreen.PlayerEvent
+import com.listener.musicplayerapp.presentation.common.PlayerControllerUIState
+import com.listener.musicplayerapp.presentation.common.PlayerEvent
 
 @Composable
 fun PlayerScreen(
@@ -42,17 +44,16 @@ fun PlayerScreen(
     onEvent: (PlayerEvent) -> Unit,
     playerControllerUIState: PlayerControllerUIState
 ) {
-    var progress by rememberSaveable { mutableStateOf(0f) }
+    var progress by rememberSaveable { mutableFloatStateOf(0f) }
+
     Surface(
+        modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-        ) {
+        Column {
             ConstraintLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 48.dp)
             ) {
                 val (image, textTitle, textAuthor, slider, timeRow) = createRefs()
                 Image(
@@ -103,7 +104,7 @@ fun PlayerScreen(
                             top.linkTo(slider.bottom)
                         }
                         .width(280.dp)
-                ){
+                ) {
                     Text(text = "0.00")
                     Spacer(modifier = Modifier.weight(1f))
                     Text(text = "3.00")
@@ -143,7 +144,8 @@ fun PlayerScreen(
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
+                    .align(Alignment.CenterHorizontally)
+                    .padding(bottom = 16.dp),
                 onClick = { /*TODO*/ }
             ) {
                 Icon(

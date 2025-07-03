@@ -1,9 +1,10 @@
-package com.listener.musicplayerapp.presentation.ui.common
+package com.listener.musicplayerapp.presentation.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.listener.musicplayerapp.domain.usecase.GetCurrentPositionUseCase
 import com.listener.musicplayerapp.domain.usecase.SetPlayerControllerCallbackUseCase
+import com.listener.musicplayerapp.presentation.playerscreen.PlayerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,6 +1,7 @@
-package com.listener.musicplayerapp.presentation.ui.common
+package com.listener.musicplayerapp.presentation.common
 
 import com.listener.musicplayerapp.domain.model.Song
+import com.listener.musicplayerapp.presentation.playerscreen.PlayerState
 
 data class PlayerControllerUIState(
     val playerState: PlayerState? = null,

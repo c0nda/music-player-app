@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.presentation.ui.common
+package com.listener.musicplayerapp.presentation.playerscreen
 
 enum class PlayerState {
     PLAYING,

@@ -30,7 +30,7 @@
             </intent-filter>
         </service>
         <activity
-            android:name=".presentation.ui.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Musicplayerapp">
             <intent-filter>
