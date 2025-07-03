@@ -1,9 +1,7 @@
-package com.listener.musicplayerapp.di
+package com.listener.musicplayerapp.di.modules
 
 import android.content.ComponentName
 import android.content.Context
-import dagger.Module
-import dagger.Provides
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.exoplayer.ExoPlayer
@@ -16,6 +14,8 @@ import com.listener.musicplayerapp.data.service.MusicService
 import com.listener.musicplayerapp.data.service.PlayerControllerImpl
 import com.listener.musicplayerapp.domain.service.PlayerController
 import dagger.Binds
+import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 @Module

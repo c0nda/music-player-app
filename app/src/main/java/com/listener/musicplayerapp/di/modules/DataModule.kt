@@ -1,4 +1,4 @@
-package com.listener.musicplayerapp.di
+package com.listener.musicplayerapp.di.modules
 
 import com.listener.musicplayerapp.data.local.LocalDataSource
 import com.listener.musicplayerapp.data.local.device.DeviceStorage
