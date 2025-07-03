@@ -1,19 +1,19 @@
 [versions]
-agp = "8.4.2"
-constraintlayoutCompose = "1.1.0-alpha13"
+agp = "8.9.3"
+constraintlayoutCompose = "1.1.1"
 dagger = "2.48"
 daggerCompiler = "2.48"
-kotlin = "1.9.0"
-coreKtx = "1.13.1"
-lifecycleRuntimeKtx = "2.8.2"
-activityCompose = "1.9.0"
-composeBom = "2024.06.00"
-composeMaterial = "1.3.1"
-media3Exoplayer = "1.4.1"
-media3ExoplayerDash = "1.4.1"
-media3Ui = "1.4.1"
-media3Session = "1.4.1"
-navigationCompose = "2.7.7"
+kotlin = "2.0.21"
+coreKtx = "1.16.0"
+lifecycleRuntimeKtx = "2.9.1"
+activityCompose = "1.10.1"
+composeBom = "2025.06.01"
+composeMaterial = "1.4.1"
+media3Exoplayer = "1.7.1"
+media3ExoplayerDash = "1.7.1"
+media3Ui = "1.7.1"
+media3Session = "1.7.1"
+navigationCompose = "2.9.0"
 
 [libraries]
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -40,4 +40,5 @@ androidx-media3-session = { group = "androidx.media3", name = "media3-session", 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
