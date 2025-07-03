@@ -3,7 +3,7 @@ package com.listener.musicplayerapp.utils
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import com.listener.musicplayerapp.domain.model.Song
-import com.listener.musicplayerapp.presentation.ui.common.PlayerState
+import com.listener.musicplayerapp.presentation.playerscreen.PlayerState
 
 
 fun MediaItem.toSong(): Song {

@@ -8,7 +8,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
 import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.domain.service.PlayerController
-import com.listener.musicplayerapp.presentation.ui.common.PlayerState
+import com.listener.musicplayerapp.presentation.playerscreen.PlayerState
 import com.listener.musicplayerapp.utils.toPlayerState
 import com.listener.musicplayerapp.utils.toSong
 import javax.inject.Inject

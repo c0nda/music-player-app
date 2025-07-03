@@ -2,7 +2,7 @@ package com.listener.musicplayerapp.domain.usecase
 
 import com.listener.musicplayerapp.domain.model.Song
 import com.listener.musicplayerapp.domain.service.PlayerController
-import com.listener.musicplayerapp.presentation.ui.common.PlayerState
+import com.listener.musicplayerapp.presentation.playerscreen.PlayerState
 import javax.inject.Inject
 
 class SetPlayerControllerCallbackUseCase @Inject constructor(private val playerController: PlayerController) {
