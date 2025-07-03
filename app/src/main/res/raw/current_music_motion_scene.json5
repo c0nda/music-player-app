@@ -2,8 +2,8 @@
   ConstraintSets: {
     start: {
       music_bottom_sheet: {
-        width: 'parent',
         height: 72,
+        width: 'parent',
         start: ['parent', 'start', 0],
         bottom: ['parent', 'bottom', 0]
       },
@@ -11,25 +11,21 @@
         height: 0,
         width: 'parent',
         start: ['parent', 'start', 0],
-        top: ['music_bottom_sheet', 'bottom', 0],
-        bottom: ['parent', 'bottom', 0],
-        end: ['parent', 'end', 0],
+        top: ['music_bottom_sheet', 'bottom', 0]
       }
     },
     end: {
       music_bottom_sheet: {
-        width: 'parent',
         height: 72,
+        width: 'parent',
         start: ['parent', 'start', 0],
-        top: ['music_player', 'top', 0]
+        top: ['parent', 'top', 0]
       },
       music_player: {
         height: 'parent',
         width: 'parent',
         start: ['parent', 'start', 0],
-        top: ['music_bottom_sheet', 'bottom', 0],
-        bottom: ['parent', 'bottom', 0],
-        end: ['parent', 'end', 0],
+        top: ['parent', 'top', 0]
       }
     }
   },
@@ -41,7 +37,12 @@
           {
             target: ['music_bottom_sheet'],
             frames: [0, 25, 50, 100],
-            alpha: [1.0, 0.9, 0.8, 0.0]
+            alpha: [1.0, 0.5, 0.0, 0.0]
+          },
+          {
+            target: ['music_player'],
+            frames: [0, 50, 75, 100],
+            alpha: [0.0, 0.5, 0.75, 1.0]
           }
         ],
         KeyCycles: {},
